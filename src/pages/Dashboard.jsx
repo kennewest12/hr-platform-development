@@ -1,7 +1,10 @@
+import React from "react";
+import Headers from "../components/layout/Header";
+import Sidebar from "../components/layout/Sidebar";
 export default function Dashboard() {
   return (
-    <div className="p-20 text-3xl font-bold text-green-600">
-      Dashboard Page (HR Data goes here)
+    <div className="">
+      <Headers />
     </div>
   );
 }

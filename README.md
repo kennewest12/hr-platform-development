@@ -1,16 +1,26 @@
-# React + Vite
+# HR Platform Development
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A professional Human Resource Management System (HRMS) built as a technical assessment.
 
-Currently, two official plugins are available:
+## 🛠 Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Frontend:** React (Vite)
+- **Styling:** Tailwind CSS v4
+- **Icons:** Lucide React
+- **State Management:** @tanstack/react-query
+- **Routing:** React Router Dom
+- **API Client:** Axios
 
-## React Compiler
+## ⚙️ Project Setup
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. **Initialised** Vite React project.
+2. **Configured** Tailwind CSS v4 with the `@tailwindcss/vite` plugin.
+3. **Integrated** Lucide React for consistent iconography.
+4. **Utility Setup:** Created `src/utils/cn.js` for dynamic Tailwind class merging using `clsx` and `tailwind-merge`.
+5. **Git Configuration:** Implemented a professional `.gitignore` to exclude `node_modules`, `.env`, and `dist`.
 
-## Expanding the ESLint configuration
+## 🚀 How to Run
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Clone the repository.
+2. Run `npm install` to install dependencies.
+3. Run `npm run dev` to start the development server.

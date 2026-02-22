@@ -8,7 +8,7 @@ import {
 import "./App.css";
 // import components and pages
 import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
+import Admin from "./pages/Admin";
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
         <Route path="/login" element={<Login />} />
 
         {/* The Main Dashboard */}
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </Router>
   );

@@ -6,7 +6,7 @@ import profileIcon from "../../assets/profile-icon.svg";
 
 export default function Header() {
   return (
-    <header className="flex h-16 w-full items-center justify-between bg-white p-4 shadow-sm">
+    <header className="sticky top-0 z-50 flex h-16 w-full items-center justify-between bg-white p-4 shadow-sm">
       <div>
         <img src={logo} alt="Company Logo" className="h-8 w-auto" />
       </div>

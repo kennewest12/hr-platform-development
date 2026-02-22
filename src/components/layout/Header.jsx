@@ -1,8 +1,5 @@
 import React from "react";
 import logo from "../../assets/logo.png";
-// import helpIcon from "../../assets/help-icon.svg";
-// import bellIcon from "../../assets/bell-icon.svg";
-// import profileIcon from "../../assets/profile-icon.svg";
 import { HelpCircle, Bell, UserCircle } from "lucide-react";
 
 export default function Header() {

@@ -1,5 +1,4 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import {
   LayoutDashboard,
   Users,
@@ -12,17 +11,17 @@ import {
   Settings,
 } from "lucide-react";
 
-export default function Sidebar() {
+export default function Sidebar({ currentPage, onPageChange }) {
   const menuItems = [
-    { name: "Dashboard", icon: LayoutDashboard, path: "/admin" },
-    { name: "Employees", icon: Users, path: "/admin/employees" },
-    { name: "Attendance", icon: Clock, path: "/admin/attendance" },
-    { name: "Recruitment", icon: UserPlus, path: "/admin/recruitment" },
-    { name: "Payroll", icon: CreditCard, path: "/admin/payroll" },
-    { name: "Calendar", icon: Calendar, path: "/admin/calendar" },
-    { name: "Reports", icon: BarChart3, path: "/admin/reports" },
-    { name: "Documents", icon: FileText, path: "/admin/documents" },
-    { name: "Settings", icon: Settings, path: "/admin/settings" },
+    { name: "Dashboard", icon: LayoutDashboard },
+    { name: "Employees", icon: Users },
+    { name: "Attendance", icon: Clock },
+    { name: "Recruitment", icon: UserPlus },
+    { name: "Payroll", icon: CreditCard },
+    { name: "Calendar", icon: Calendar },
+    { name: "Reports", icon: BarChart3 },
+    { name: "Documents", icon: FileText },
+    { name: "Settings", icon: Settings },
   ];
 
   return (
@@ -31,23 +30,17 @@ export default function Sidebar() {
         <ul className="space-y-1">
           {menuItems.map((item) => (
             <li key={item.name}>
-              <NavLink
-                to={item.path}
-                end={item.path === "/admin"}
-                className={({ isActive }) => `
-                  flex items-center px-4 py-3 rounded-[10px] transition-all group
-                  ${isActive ? "bg-blue-50 text-blue-600 font-semibold" : "hover:bg-blue-50 text-gray-700"}
-                `}
+              <button
+                className={`flex items-center w-full px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  currentPage === item.name
+                    ? "bg-blue-50 text-blue-600 font-semibold"
+                    : "hover:bg-blue-50 text-gray-700"
+                }`}
+                onClick={() => onPageChange(item.name)}
               >
-                {({ isActive }) => (
-                  <>
-                    <item.icon
-                      className={`w-5 h-5 mr-3 ${isActive ? "text-blue-600" : "text-gray-500 group-hover:text-blue-600"}`}
-                    />
-                    <span className="text-sm font-medium">{item.name}</span>
-                  </>
-                )}
-              </NavLink>
+                <item.icon className="w-5 h-5 mr-3" />
+                <span>{item.name}</span>
+              </button>
             </li>
           ))}
         </ul>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Headers from "../components/layout/Header";
 import Sidebar from "../components/layout/Sidebar";
 
-import Dashboard from "../components/DashboardPage/dashboard";
+import Dashboard from "../components/DashboardPage/Dashboard";
 
 export default function Admin() {
   const [currentPage, setCurrentPage] = useState("Dashboard");

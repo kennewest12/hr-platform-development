@@ -14,8 +14,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* When the app starts, go straight to Login */}
-        <Route path="/" element={<Navigate to="/login" />} />
+        {/* Change the "/" path to point to Admin instead of Login */}
+        {/* When the app starts, go straight to Admin is is Temporary i will switch back to login when dashboard is completed */}
+        <Route path="/" element={<Navigate to="/admin" />} />
 
         {/* The Login Page */}
         <Route path="/login" element={<Login />} />

@@ -18,7 +18,7 @@ export default function AttendanceSummaryCard() {
   };
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 max-w-sm">
+    <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 h-full">
       <div className="flex items-center mb-4">
         <Clock className="text-blue-600 w-5 h-5" />
         <h3 className="text-md font-bold text-gray-900 ml-2">
@@ -27,7 +27,7 @@ export default function AttendanceSummaryCard() {
       </div>
 
       <form className="flex flex-col gap-4">
-        {/* Option 1 */}
+        {/*   In Office / Remote*/}
         <div className="flex items-center justify-between group">
           <label className="flex items-center gap-3 cursor-pointer">
             <input
@@ -47,7 +47,7 @@ export default function AttendanceSummaryCard() {
           </span>
         </div>
 
-        {/* Option 2 */}
+        {/*  Out / On Leave */}
         <div className="flex items-center justify-between group">
           <label className="flex items-center gap-3 cursor-pointer">
             <input

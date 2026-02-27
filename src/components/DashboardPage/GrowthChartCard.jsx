@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   LineChart,
   XAxis,
@@ -8,18 +8,16 @@ import {
   Line,
   ResponsiveContainer,
 } from "recharts";
+import { fetchWorkforceData } from "../../data/workforce";
 
 export default function GrowthChartCard() {
-  // Updated data to reflect the upward trend in your image
-  const data = [
-    { month: "Aug", headcount: 210 },
-    { month: "Sep", headcount: 225 },
-    { month: "Oct", headcount: 232 },
-    { month: "Nov", headcount: 240 },
-    { month: "Dec", headcount: 245 },
-    { month: "Jan", headcount: 248 },
-    { month: "Feb", headcount: 255 },
-  ];
+  const [headcountGrowthData, setHeadcountGrowthData] = useState([]);
+
+  useEffect(() => {
+    fetchWorkforceData().then((data) =>
+      setHeadcountGrowthData(data.headcountGrowth || []),
+    );
+  }, []);
 
   return (
     <div className="bg-white p-4 rounded-lg shadow-md">
@@ -32,7 +30,7 @@ export default function GrowthChartCard() {
 
       <ResponsiveContainer width="100%" height={250}>
         <LineChart
-          data={data}
+          data={headcountGrowthData}
           margin={{ top: 10, right: 35, bottom: 5, left: 5 }}
         >
           <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />

@@ -1,36 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { fetchWorkforceData } from "../../data/workforce";
 
 export default function ActionItemsCard() {
   const [completedIds, setCompletedIds] = useState([]);
   const [isActionsExpanded, setIsActionsExpanded] = useState(false);
-  const action = [
-    {
-      id: 1,
-      title: "Approve 3 leave requests",
-      priority: "high",
-      color: "red",
-    },
-    {
-      id: 2,
-      title: "Schedule interviews for Marketing position",
-      priority: "medium",
-      color: "yellow",
-    },
-    {
-      id: 3,
-      title: "Send benefits enrollment reminder",
-      priority: "low",
-      color: "green",
-    },
-    {
-      id: 4,
-      title: "Update employee handbook",
-      priority: "low",
-      color: "green",
-    },
-    { id: 5, title: "Review Q4 budget", priority: "low", color: "green" },
-    { id: 6, title: "Organize team building", priority: "low", color: "green" },
-  ];
+  const [actionItems, setActionItems] = useState([]);
+
+  useEffect(() => {
+    fetchWorkforceData().then((data) => setActionItems(data.actionItems || []));
+  }, []);
 
   const priorityStyles = {
     red: "bg-red-100 text-red-700 border-red-200",
@@ -46,15 +24,17 @@ export default function ActionItemsCard() {
     );
   };
 
-  const displayedActions = isActionsExpanded ? action : action.slice(0, 3);
+  const displayedActions = isActionsExpanded
+    ? actionItems
+    : actionItems.slice(0, 3);
 
   return (
     <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col gap-6">
       <h3 className=" font-bold text-neutral-950">
-        Action Items ({action.length})
+        Action Items ({actionItems.length})
       </h3>
 
-      {action.length === 0 ? (
+      {actionItems.length === 0 ? (
         <p className="text-gray-500 text-sm text-center py-4">
           No pending action items
         </p>
@@ -102,7 +82,7 @@ export default function ActionItemsCard() {
             })}
           </ul>
           {/* its show button if there are more than 3 items */}
-          {action.length > 3 && (
+          {actionItems.length > 3 && (
             <button
               onClick={() => setIsActionsExpanded(!isActionsExpanded)}
               className="w-full bg-blue-500 text-white font-bold py-2 rounded-lg hover:bg-blue-600 transition-colors"

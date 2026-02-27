@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   PieChart,
   Pie,
@@ -7,26 +7,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-
-const data = [
-  { name: "Engineering", value: 85 },
-  { name: "Sales", value: 52 },
-  { name: "Marketing", value: 38 },
-  { name: "Product", value: 28 },
-  { name: "HR", value: 15 },
-  { name: "Finance", value: 12 },
-  { name: "Other", value: 17 },
-];
-
-const colors = [
-  "#3B82F6",
-  "#10B981",
-  "#F59E0B",
-  "#8B5CF6",
-  "#EC4899",
-  "#14B8A6",
-  "#6B7280",
-];
+import { fetchWorkforceData } from "../../data/workforce";
 
 // Custom Label Component to match the image style
 const renderCustomLabel = ({
@@ -58,6 +39,24 @@ const renderCustomLabel = ({
 };
 
 export default function DepartmentPieChartCard() {
+  const [departmentData, setDepartmentData] = useState([]);
+
+  useEffect(() => {
+    fetchWorkforceData().then((data) =>
+      setDepartmentData(data.departments || []),
+    );
+  }, []);
+
+  const colors = [
+    "#3B82F6",
+    "#10B981",
+    "#F59E0B",
+    "#8B5CF6",
+    "#EC4899",
+    "#14B8A6",
+    "#6B7280",
+  ];
+
   return (
     <div className="bg-white p-6 rounded-lg shadow-md w-full">
       <div className="mb-6">
@@ -70,17 +69,17 @@ export default function DepartmentPieChartCard() {
       <ResponsiveContainer width="100%" height={250}>
         <PieChart>
           <Pie
-            data={data}
+            data={departmentData}
             cx="50%"
             cy="50%"
             innerRadius={0}
-            outerRadius="70%"
+            outerRadius={90}
             paddingAngle={2}
             dataKey="value"
             label={renderCustomLabel}
             labelLine={false}
           >
-            {data.map((entry, index) => (
+            {departmentData.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
                 fill={colors[index % colors.length]}

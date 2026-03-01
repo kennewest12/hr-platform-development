@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Pagination from "./Pagination";
 
 export default function EmployeesTableSection() {
@@ -34,6 +34,19 @@ export default function EmployeesTableSection() {
       status: "Onboarding",
     },
   ];
+  {
+    /* Add pagination logic inside the component */
+  }
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 2;
+
+  const totalPages = Math.ceil(employees.length / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentEmployees = employees.slice(
+    startIndex,
+    startIndex + itemsPerPage,
+  );
   return (
     <div className="space-y-6">
       <div className="bg-white/30 backdrop-blur-xl rounded-xl border border-slate-200/50 dark:border-slate-700/50 overflow-hidden">
@@ -65,7 +78,7 @@ export default function EmployeesTableSection() {
               </tr>
             </thead>
             <tbody className=" bg-white/80 divide-y divide-slate-200/50 dark:divide-slate-700/50">
-              {employees.map((emp, i) => (
+              {currentEmployees.map((emp, i) => (
                 <tr
                   key={i}
                   className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors"
@@ -111,7 +124,12 @@ export default function EmployeesTableSection() {
         </div>
       </div>
 
-      <Pagination currentPage={1} totalPages={5} />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onNext={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+        onPrev={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+      />
     </div>
   );
 }

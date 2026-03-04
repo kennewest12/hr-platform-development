@@ -15,6 +15,22 @@ export default function StatsGrid() {
     fetchWorkforceData().then((data) => {
       const newHires = data.newRecruit || [];
 
+      // 1. Get the last two months from your headcountGrowth array
+      const growth = data.headcountGrowth || [];
+      const currentMonth = growth[growth.length - 1]?.headcount || 0; // e.g., 247
+      const lastMonth = growth[growth.length - 2]?.headcount || 0; // e.g., 220
+
+      // 2. Calculate the difference
+      const diff = currentMonth - lastMonth;
+
+      // 3. Calculate the percentage
+      const percentage =
+        lastMonth > 0 ? Math.abs((diff / lastMonth) * 100).toFixed(0) : 0;
+
+      // 4. Determine trend direction
+      const trendDir = diff >= 0 ? "up" : "down";
+      const sign = diff >= 0 ? "+" : "-";
+
       // Recruitment logic
 
       const thisMonth = newHires.filter(
@@ -74,8 +90,6 @@ export default function StatsGrid() {
       }
 
       // Open Positions Logic
-
-      // Open Positions Logic
       const positions = data.openPositions || [];
 
       // Total number of open positions
@@ -98,10 +112,10 @@ export default function StatsGrid() {
           id: 1,
           title: "Total Employees",
           value: data.totalEmployees, // comes from workforceData
-          trend: "up",
+          trend: trendDir,
           icon: Users,
           iconColor: "text-[#155DFC]",
-          change: "+12%",
+          change: `${sign}${percentage}%`,
           subtext: "from last month",
         },
 

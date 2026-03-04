@@ -1,8 +1,23 @@
 // Simulated data
+
+const departments = [
+  { name: "Engineering", value: 85 },
+  { name: "Sales", value: 52 },
+  { name: "Marketing", value: 38 },
+  { name: "Product", value: 28 },
+  { name: "HR", value: 15 },
+  { name: "Finance", value: 12 },
+  { name: "Other", value: 17 },
+];
+const total = departments.reduce((acc, dept) => acc + dept.value, 0);
+const onLeaveCount = 58;
+const activeCount = Math.max(0, total - onLeaveCount);
+
 const workforceData = {
-  totalEmployees: 247,
-  active: 189,
-  onLeave: 58,
+  totalEmployees: total,
+  active: activeCount,
+  onLeave: onLeaveCount,
+  departments: departments,
 
   // 🔥 NEW HIRE DATA
   newRecruit: [
@@ -84,24 +99,15 @@ const workforceData = {
       department: "Finance",
     },
   ],
-  departments: [
-    { name: "Engineering", value: 85 },
-    { name: "Sales", value: 52 },
-    { name: "Marketing", value: 38 },
-    { name: "Product", value: 28 },
-    { name: "HR", value: 15 },
-    { name: "Finance", value: 12 },
-    { name: "Other", value: 17 },
-  ],
 
   headcountGrowth: [
-    { month: "Aug", headcount: 210 },
-    { month: "Sep", headcount: 225 },
-    { month: "Oct", headcount: 232 },
-    { month: "Nov", headcount: 240 },
-    { month: "Dec", headcount: 245 },
-    { month: "Jan", headcount: 248 },
-    { month: "Feb", headcount: 255 },
+    { month: "Aug", headcount: 205 },
+    { month: "Sep", headcount: 207 },
+    { month: "Oct", headcount: 209 },
+    { month: "Nov", headcount: 213 },
+    { month: "Dec", headcount: 215 },
+    { month: "Jan", headcount: 221 },
+    { month: "Feb", headcount: 247 },
   ],
 
   actionItems: [
@@ -122,6 +128,24 @@ const workforceData = {
       title: "Send benefits enrollment reminder",
       priority: "low",
       color: "green",
+    },
+    {
+      id: 4,
+      title: "Review Q1 performance appraisals",
+      priority: "high",
+      color: "red",
+    },
+    {
+      id: 5,
+      title: "Update health insurance policy docs",
+      priority: "low",
+      color: "green",
+    },
+    {
+      id: 6,
+      title: "Order welcome kits for new hires",
+      priority: "medium",
+      color: "yellow",
     },
   ],
 };

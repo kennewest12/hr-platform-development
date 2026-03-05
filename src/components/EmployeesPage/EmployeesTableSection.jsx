@@ -1,22 +1,41 @@
-import React, { useState, useEffect } from "react";
+import React, { useMemo } from "react";
 import Pagination from "./Pagination";
 
-export default function EmployeesTableSection({ employees }) {
-  const [currentPage, setCurrentPage] = useState(1);
+const statusStyles = {
+  Active: "bg-green-50 text-green-700 border-green-200/50",
+  Onboarding: "bg-indigo-50 text-indigo-700 border-indigo-200/50",
+  "On Leave": "bg-amber-50 text-amber-700 border-amber-200/50",
+  Offboarded: "bg-red-50 text-red-700 border-red-200/50",
+  Default: "bg-slate-50 text-slate-600 border-slate-200/50",
+};
+
+// Small component for status badges
+function StatusBadge({ status }) {
+  return (
+    <span
+      title={status}
+      className={`inline-flex items-center justify-center min-w-32 px-4 py-1 rounded-full text-sm font-bold tracking-wider border ${
+        statusStyles[status] || statusStyles.Default
+      } transition-all duration-200`}
+    >
+      {status}
+    </span>
+  );
+}
+
+export default function EmployeesTableSection({ employees, onSelectEmployee }) {
+  const [currentPage, setCurrentPage] = React.useState(1);
   const itemsPerPage = 10;
 
-  // ✅ Reset page when employees changes
-  useEffect(() => {
-    const id = setTimeout(() => setCurrentPage(1), 0);
-    return () => clearTimeout(id);
-  }, [employees]);
-
   const totalPages = Math.max(1, Math.ceil(employees.length / itemsPerPage));
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentEmployees = employees.slice(
-    startIndex,
-    startIndex + itemsPerPage,
-  );
+
+  // Clamp current page to avoid invalid page numbers
+  const clampedCurrentPage = Math.min(currentPage, totalPages);
+
+  const currentEmployees = useMemo(() => {
+    const startIndex = (clampedCurrentPage - 1) * itemsPerPage;
+    return employees.slice(startIndex, startIndex + itemsPerPage);
+  }, [clampedCurrentPage, employees]);
 
   return (
     <div className="space-y-6">
@@ -47,6 +66,7 @@ export default function EmployeesTableSection({ employees }) {
               </th>
             </tr>
           </thead>
+
           <tbody className="bg-white/80 divide-y divide-slate-200/50 dark:divide-slate-700/50">
             {currentEmployees.length === 0 ? (
               <tr>
@@ -58,16 +78,18 @@ export default function EmployeesTableSection({ employees }) {
               currentEmployees.map((emp) => (
                 <tr
                   key={emp.id}
-                  className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors"
+                  className="border-b hover:bg-slate-50 transition-colors cursor-pointer"
+                  onClick={() => onSelectEmployee?.(emp)}
                 >
                   <td className="px-6 py-4">
-                    <p className="font-semibold text-slate-900 dark:text-white">
+                    <p className="font-bold text-blue-600 dark:text-white">
                       {emp.name}
                     </p>
-                    <p className="text-xs text-slate-500">{emp.email}</p>
+                    <p className="text-xs text-slate-400">{emp.email}</p>
                   </td>
+
                   <td className="px-6 py-4 text-sm text-center text-slate-600 dark:text-slate-300">
-                    {emp.title}
+                    {emp.jobTitle}
                   </td>
                   <td className="px-6 py-4 text-sm text-center text-slate-600 dark:text-slate-300">
                     {emp.department}
@@ -76,23 +98,15 @@ export default function EmployeesTableSection({ employees }) {
                     {emp.location}
                   </td>
                   <td className="px-6 py-4 text-sm text-center text-slate-600 dark:text-slate-300">
-                    {emp.type}
+                    {emp.employmentType}
                   </td>
                   <td className="px-6 py-4 text-sm text-center text-slate-600 dark:text-slate-300">
-                    {emp.date}
+                    {emp.startDate
+                      ? new Date(emp.startDate).toLocaleDateString()
+                      : "-"}
                   </td>
                   <td className="px-6 py-4 text-sm text-center">
-                    <span
-                      className={`flex items-center justify-center px-3 py-0.5 rounded-full text-sm ${
-                        emp.status === "Active"
-                          ? "bg-green-100 text-green-700"
-                          : emp.status === "Onboarding"
-                            ? "bg-blue-100 text-blue-700"
-                            : "bg-amber-100 text-amber-700"
-                      }`}
-                    >
-                      {emp.status}
-                    </span>
+                    <StatusBadge status={emp.status} />
                   </td>
                 </tr>
               ))
@@ -102,7 +116,7 @@ export default function EmployeesTableSection({ employees }) {
       </div>
 
       <Pagination
-        currentPage={currentPage}
+        currentPage={clampedCurrentPage}
         totalPages={totalPages}
         onNext={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
         onPrev={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
